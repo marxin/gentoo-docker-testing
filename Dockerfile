@@ -7,12 +7,18 @@ RUN emerge-webrsync
 #    echo 'FEATURES="\${FEATURE} noclean nostrip ccache -ipc-sandbox -network-sandbox -pid-sandbox -sandbox"' >> /etc/portage/make.conf && \
 #    echo 'CCACHE_DIR="/ccache"' >> /etc/portage/make.conf
 
-RUN emerge curl dev-vcs/git pillow
+# binary large packages + essential dependencies
+RUN FEATURES='getbinpkg binpkg-request-signature' emerge curl dev-vcs/git pillow vim openmp compiler-rt compiler-rt-sanitizers llvm-core/clang llvm-core/llvm
 RUN eselect profile set default/linux/amd64/23.0/desktop/gnome/systemd
+
+# x32 support
+RUN emerge boehm-gc libatomic_ops libxcrypt
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
+
+# RUN git clone https://github.com/davidlattimore/wild.git
 RUN git clone https://github.com/marxin/wild.git
 WORKDIR /root/wild
 RUN git checkout gentoo
@@ -21,3 +27,6 @@ RUN cp target/release/wild /usr/sbin/ld
 RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
 COPY .bash_history /root/.bash_history
+
+# libpciaccess - undefined symbol
+# mkfontscale - undefined symbol
