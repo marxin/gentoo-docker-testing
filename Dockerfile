@@ -8,16 +8,16 @@ RUN eselect profile set default/linux/amd64/23.0/desktop/gnome/systemd
 # x32 support
 RUN emerge boehm-gc libatomic_ops libxcrypt
 
-# undefined symbols
-RUN emerge alsa-lib libpciaccess mkfontscale elfutils
+# undefined symbols - #968
+RUN emerge alsa-lib elfutils
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
 # RUN git clone https://github.com/davidlattimore/wild.git
-RUN echo invalidated2 > /tmp/invalidated.txt
-RUN git clone https://github.com/marxin/wild.git
+RUN echo invalidatedaaa > /tmp/invalidated.txt
+RUN git clone https://github.com/marxin/wild.git && echo Yay
 WORKDIR /root/wild
 RUN git checkout gentoo
 RUN git rev-parse --short HEAD
@@ -29,7 +29,7 @@ COPY .bash_history /root/.bash_history
 
 # binary: cups: undefined symbol
 
-# TODO: gtk+
+# TODO: gtk+ due to bad symbols in libbsd
 # TODO: qtbase: --dynamic-list
 
 # https://github.com/pulseaudio/pulseaudio/blob/98c7c9eafb148c6e66e5fe178fc156b00f3bf51a/src/modules/echo-cancel/meson.build#L19
