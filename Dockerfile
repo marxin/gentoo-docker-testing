@@ -15,11 +15,10 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
-# RUN git clone https://github.com/davidlattimore/wild.git
 RUN echo invalidatedaaa > /tmp/invalidated.txt
-RUN git clone https://github.com/marxin/wild.git && echo Yay
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay
 WORKDIR /root/wild
-RUN git checkout gentoo
+# RUN git checkout gentoo
 RUN git rev-parse --short HEAD
 RUN cargo b -r
 RUN cp target/release/wild /usr/sbin/ld
@@ -27,19 +26,9 @@ RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
 COPY .bash_history /root/.bash_history
 
-# binary: cups: undefined symbol
+### GNOME ###
 
 # TODO: gtk+ due to bad symbols in libbsd
-# TODO: qtbase: --dynamic-list
-
-# https://github.com/pulseaudio/pulseaudio/blob/98c7c9eafb148c6e66e5fe178fc156b00f3bf51a/src/modules/echo-cancel/meson.build#L19
-# TODO: pulseaudio-daemon: --unresolved-symbols=ignore-in-object-files
-
-### GNOME ###
-# undefined: giflib
-
-# https://github.com/google/highway/blob/0e759dd39119644c902eb0dcda2cfe03483c40ac/hwy/hwy.version#L4
-
+# undefined: giflib lvm2 cryptsetup
 # spidermonkey: cannot find adequate linker
-
 # libbsd: broken symbol versioning
