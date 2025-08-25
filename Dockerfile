@@ -32,3 +32,4 @@ COPY .bash_history /root/.bash_history
 # undefined: giflib lvm2 cryptsetup
 # spidermonkey: cannot find adequate linker
 # libbsd: broken symbol versioning
+# TODO: networkmanager: Error: no ID for constraint linkend: "nm-settings-keyfile".
