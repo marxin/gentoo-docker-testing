@@ -8,17 +8,13 @@ RUN eselect profile set default/linux/amd64/23.0/desktop/gnome/systemd
 # x32 support
 RUN emerge boehm-gc libatomic_ops libxcrypt
 
-# undefined symbols - #968
-RUN emerge alsa-lib elfutils
-
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
 RUN echo invalidatedaaa > /tmp/invalidated.txt
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay2
 WORKDIR /root/wild
-# RUN git checkout gentoo
 RUN git rev-parse --short HEAD
 RUN cargo b -r
 RUN cp target/release/wild /usr/sbin/ld
@@ -26,10 +22,11 @@ RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
 COPY .bash_history /root/.bash_history
 
-### GNOME ###
+# emerge world - ~300 packages
+# emerge gnome - ~400 packages
+# emerge texlive - ~80 packages
 
-# TODO: gtk+ due to bad symbols in libbsd
-# undefined: giflib lvm2 cryptsetup
-# spidermonkey: cannot find adequate linker
-# libbsd: broken symbol versioning
-# TODO: networkmanager: Error: no ID for constraint linkend: "nm-settings-keyfile".
+# Known limitations:
+#
+# - spidermonkey: cannot find adequate linker
+# - NetworkManager: pending `nm -D` change by Mateusz
