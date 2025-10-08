@@ -13,20 +13,24 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
 RUN echo invalidatedaaa > /tmp/invalidated.txt
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay2
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay3
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
 RUN cargo b -r
 RUN cp target/release/wild /usr/sbin/ld
 RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
+RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip"' >> /etc/portage/make.conf
 COPY .bash_history /root/.bash_history
 
 # emerge world - ~300 packages
 # emerge gnome - ~400 packages
-# emerge texlive - ~80 packages
+# emerge texlive neovim gimp kcachegrind libreoffice gimp inkscape - ~250 packages
 
 # Known limitations:
 #
 # - spidermonkey: cannot find adequate linker
 # - NetworkManager: pending `nm -D` change by Mateusz
+# - lapack - unresolved symbol in configure checking
+# - mariadb-connector-c - cannot parse linker script
+# - texlive-core - checking whether float word ordering is bigendian - symbol is removed due to GC (--no-gc-sections helps)
