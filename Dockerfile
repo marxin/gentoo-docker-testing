@@ -21,6 +21,8 @@ RUN cp target/release/wild /usr/sbin/ld
 RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
 RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip"' >> /etc/portage/make.conf
+RUN echo 'ACCEPT_KEYWORDS="~amd64"' >> /etc/portage/make.conf
+RUN echo 'ACCEPT_KEYWORDS="~arm64"' >> /etc/portage/make.conf
 COPY .bash_history /root/.bash_history
 
 # emerge world - ~300 packages
@@ -33,3 +35,5 @@ COPY .bash_history /root/.bash_history
 # - NetworkManager: pending `nm -D` change by Mateusz (will be fixed in the upcoming release)
 # - lapack - unresolved symbol in configure checking
 # - texlive-core - checking whether float word ordering is bigendian - symbol is removed due to GC (--no-gc-sections helps)
+# Random package build issues:
+# - audiofile: missing --retain-symbols-file option (latest relase is 10+ years old)
