@@ -13,7 +13,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
 RUN echo invalidatedaaa > /tmp/invalidated.txt
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay3
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
 RUN cargo b -r
@@ -30,7 +30,6 @@ COPY .bash_history /root/.bash_history
 # Known limitations:
 #
 # - spidermonkey: cannot find adequate linker
-# - NetworkManager: pending `nm -D` change by Mateusz
+# - NetworkManager: pending `nm -D` change by Mateusz (will be fixed in the upcoming release)
 # - lapack - unresolved symbol in configure checking
-# - mariadb-connector-c - cannot parse linker script
 # - texlive-core - checking whether float word ordering is bigendian - symbol is removed due to GC (--no-gc-sections helps)
