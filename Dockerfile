@@ -35,5 +35,9 @@ COPY .bash_history /root/.bash_history
 # - NetworkManager: pending `nm -D` change by Mateusz (will be fixed in the upcoming release)
 # - lapack - unresolved symbol in configure checking
 # - texlive-core - checking whether float word ordering is bigendian - symbol is removed due to GC (--no-gc-sections helps)
+
 # Random package build issues:
 # - audiofile: missing --retain-symbols-file option (latest relase is 10+ years old)
+# - ghc: uses --relocatable (-r) option
+# - satisfier: uses -oformat
+# - efivar: --no-fatal-warnings: support
