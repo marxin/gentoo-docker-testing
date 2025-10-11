@@ -20,7 +20,7 @@ RUN cargo b -r
 RUN cp target/release/wild /usr/sbin/ld
 RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
-RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip"' >> /etc/portage/make.conf
+RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip harfbuzz"' >> /etc/portage/make.conf
 RUN echo 'ACCEPT_KEYWORDS="~amd64"' >> /etc/portage/make.conf
 RUN echo 'ACCEPT_KEYWORDS="~arm64"' >> /etc/portage/make.conf
 COPY .bash_history /root/.bash_history
