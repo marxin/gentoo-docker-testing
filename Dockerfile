@@ -7,7 +7,7 @@ RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip harfbuzz"' >> /etc/p
 RUN FEATURES='getbinpkg binpkg-request-signature' emerge curl dev-vcs/git pillow vim openmp compiler-rt compiler-rt-sanitizers cmake llvm-core/clang llvm-core/llvm
 RUN eselect profile set default/linux/amd64/23.0/desktop/gnome/systemd \
   || eselect profile set default/linux/arm64/23.0/desktop/gnome/systemd \
-  || eselect profile set default/linux/arm64/23.0/desktop/gnome/systemd
+  || eselect profile set default/linux/riscv/23.0/rv64/lp64d/desktop/systemd
 
 # x32 support
 RUN emerge boehm-gc libatomic_ops libxcrypt
