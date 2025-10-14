@@ -2,7 +2,9 @@ FROM docker.io/gentoo/stage3
 RUN emerge-webrsync
 
 # binary large packages + essential dependencies
-RUN FEATURES='getbinpkg binpkg-request-signature' emerge curl dev-vcs/git pillow vim openmp compiler-rt compiler-rt-sanitizers cmake llvm-core/clang llvm-core/llvm gcc
+RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip harfbuzz"' >> /etc/portage/make.conf
+
+RUN FEATURES='getbinpkg binpkg-request-signature' emerge curl dev-vcs/git pillow vim openmp compiler-rt compiler-rt-sanitizers cmake llvm-core/clang llvm-core/llvm
 RUN eselect profile set default/linux/amd64/23.0/desktop/gnome/systemd || eselect profile set default/linux/arm64/23.0/desktop/gnome/systemd
 
 # x32 support
@@ -13,16 +15,13 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
 RUN echo invalidatedaaa > /tmp/invalidated.txt
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay2
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
 RUN cargo b -r
 RUN cp target/release/wild /usr/sbin/ld
 RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
-RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip harfbuzz"' >> /etc/portage/make.conf
-RUN echo 'ACCEPT_KEYWORDS="~amd64"' >> /etc/portage/make.conf
-RUN echo 'ACCEPT_KEYWORDS="~arm64"' >> /etc/portage/make.conf
 COPY .bash_history /root/.bash_history
 
 # emerge world - ~300 packages
