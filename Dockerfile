@@ -1,10 +1,11 @@
-FROM docker.io/gentoo/stage3
+FROM gentoo/stage3:amd64-desktop-systemd
 RUN emerge-webrsync
 
 # binary large packages + essential dependencies
 RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip harfbuzz"' >> /etc/portage/make.conf
 
-RUN FEATURES='getbinpkg binpkg-request-signature' emerge curl dev-vcs/git pillow vim openmp compiler-rt compiler-rt-sanitizers cmake llvm-core/clang llvm-core/llvm
+RUN FEATURES='getbinpkg binpkg-request-signature' emerge curl dev-vcs/git vim pillow
+# openmp compiler-rt compiler-rt-sanitizers cmake llvm-core/clang llvm-core/llvm
 RUN eselect profile set default/linux/amd64/23.0/desktop/gnome/systemd \
   || eselect profile set default/linux/arm64/23.0/desktop/gnome/systemd \
   || eselect profile set default/linux/riscv/23.0/rv64/lp64d/desktop/systemd
@@ -17,7 +18,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
 RUN echo invalidatedaaa > /tmp/invalidated.txt
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay2
+RUN git clone https://github.com/davidlattimore/wild.git
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
 RUN cargo b -r
