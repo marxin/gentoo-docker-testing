@@ -4,7 +4,7 @@ RUN emerge-webrsync
 # binary large packages + essential dependencies
 RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip harfbuzz"' >> /etc/portage/make.conf
 
-RUN FEATURES='getbinpkg binpkg-request-signature' emerge curl dev-vcs/git vim pillow
+RUN emerge curl dev-vcs/git vim pillow
 # openmp compiler-rt compiler-rt-sanitizers cmake llvm-core/clang llvm-core/llvm
 RUN eselect profile set default/linux/amd64/23.0/desktop/gnome/systemd \
   || eselect profile set default/linux/arm64/23.0/desktop/gnome/systemd \
@@ -17,8 +17,7 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
-RUN echo invalidatedaaa > /tmp/invalidated.txt
-RUN git clone https://github.com/davidlattimore/wild.git
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay2
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
 RUN cargo b -r
