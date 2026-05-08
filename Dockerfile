@@ -1,8 +1,7 @@
 FROM gentoo/stage3:amd64-desktop-systemd
 RUN emerge-webrsync
 
-# binary large packages + essential dependencies
-RUN echo 'USE="-gdk-pixbuf -sysprof fontconfig webp minizip harfbuzz"' >> /etc/portage/make.conf
+COPY make.conf /etc/portage/make.conf
 
 RUN emerge curl dev-vcs/git vim pillow
 # openmp compiler-rt compiler-rt-sanitizers cmake llvm-core/clang llvm-core/llvm
@@ -22,7 +21,7 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay5
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay6
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
 RUN cargo b -r --features plugins
