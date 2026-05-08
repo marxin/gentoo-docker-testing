@@ -12,15 +12,20 @@ RUN eselect profile set default/linux/amd64/23.0/desktop/gnome/systemd \
 
 # x32 support
 RUN emerge boehm-gc libatomic_ops libxcrypt
+# some USE flags clashes for gnome
+RUN USE=gnutls emerge ngtcp2
+# unsupported linker-script syntax: INSERT AFTER:
+# https://github.com/smuellerDD/leancrypto/blob/939384e848f0de7cbcb66ea0d30b9fa08305983c/internal/src/fips_integrity_check.ld#L4
+RUN emerge leancrypto
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay2
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay5
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
-RUN cargo b -r
+RUN cargo b -r --features plugins
 RUN cp target/release/wild /usr/sbin/ld
 RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
