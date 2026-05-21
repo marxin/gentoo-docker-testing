@@ -21,10 +21,10 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay6
+RUN git clone https://github.com/davidlattimore/wild.git && echo Yay9
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
-RUN cargo b -r --features plugins
+RUN cargo b -r
 RUN cp target/release/wild /usr/sbin/ld
 RUN cp target/release/wild /usr/sbin/wild
 RUN ld --version
@@ -34,16 +34,17 @@ COPY .bash_history /root/.bash_history
 # emerge gnome - ~400 packages
 # emerge texlive neovim gimp kcachegrind libreoffice gimp inkscape - ~250 packages
 
+# TODO:
+# ibus
+
 # Known limitations:
 #
-# - spidermonkey: cannot find adequate linker
 # - NetworkManager: pending `nm -D` change by Mateusz (will be fixed in the upcoming release)
 # - lapack - unresolved symbol in configure checking
 # - texlive-core - checking whether float word ordering is bigendian - symbol is removed due to GC (--no-gc-sections helps)
 # - gcc - crates in ctor invocation, likely #588
+# - xorg-server: #1903
 
 # Random package build issues:
-# - audiofile: missing --retain-symbols-file option (latest relase is 10+ years old)
 # - ghc: uses --relocatable (-r) option
 # - satisfier: uses -oformat
-# - efivar: --no-fatal-warnings: support
