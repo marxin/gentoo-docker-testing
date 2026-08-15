@@ -44,7 +44,6 @@ COPY .bash_history /root/.bash_history
 # - lapack - unresolved symbol in configure checking
 # - texlive-core - checking whether float word ordering is bigendian - symbol is removed due to GC (--no-gc-sections helps)
 # - gcc - crates in ctor invocation, likely #588
-# - xorg-server: #1903 - still an issue!
 
 # Random package build issues:
 # - ghc: uses --relocatable (-r) option
