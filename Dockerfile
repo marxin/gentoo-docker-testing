@@ -36,7 +36,6 @@ COPY .bash_history /root/.bash_history
 # emerge texlive neovim gimp kcachegrind libreoffice gimp inkscape - ~250 packages
 
 # TODO:
-# NetworkManager: fails with LTO
 
 # Known limitations:
 #
