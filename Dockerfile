@@ -22,7 +22,7 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /root
 
-RUN git clone https://github.com/davidlattimore/wild.git && echo Yay2
+RUN git clone https://github.com/davidlattimore/wild.git
 WORKDIR /root/wild
 RUN git rev-parse --short HEAD
 RUN cargo b -r
@@ -36,9 +36,7 @@ COPY .bash_history /root/.bash_history
 # emerge texlive neovim gimp kcachegrind libreoffice gimp inkscape - ~250 packages
 
 # TODO:
-# ibus: https://github.com/wild-linker/wild/issues/2405
-# NetworkManager: fails with LTO - wait for ibus fix first
-# nodejs - 2MiB alignment
+# NetworkManager: fails with LTO
 
 # Known limitations:
 #
