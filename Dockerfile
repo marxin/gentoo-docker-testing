@@ -35,8 +35,6 @@ COPY .bash_history /root/.bash_history
 # emerge gnome - ~400 packages
 # emerge texlive neovim gimp kcachegrind libreoffice gimp inkscape - ~250 packages
 
-# TODO:
-
 # Known limitations:
 #
 # - lapack - unresolved symbol in configure checking
